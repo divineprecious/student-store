@@ -1,7 +1,9 @@
 import ProductGrid from "../ProductGrid/ProductGrid"
 import "./Home.css"
+import axios from "axios";
 
 function Home({isFetching, products, addToCart, removeFromCart, searchInputValue, getQuantityOfItemInCart, activeCategory, }) {
+
 
   // Filters products by the active category if it is not 'All Categories'.
   const productsByCategory =

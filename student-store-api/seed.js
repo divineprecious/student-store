@@ -14,11 +14,11 @@ async function seed() {
 
     // Load JSON data
     const productsData = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '../data/products.json'), 'utf8')
+      fs.readFileSync(path.join(__dirname, './data/products.json'), 'utf8')
     )
 
     const ordersData = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '../data/orders.json'), 'utf8')
+      fs.readFileSync(path.join(__dirname, './data/orders.json'), 'utf8')
     )
 
     // Seed products
@@ -38,7 +38,7 @@ async function seed() {
     for (const order of ordersData.orders) {
       const createdOrder = await prisma.order.create({
         data: {
-          customer: order.customer_id,
+          customerId: order.customer_id,
           totalPrice: order.total_price,
           status: order.status,
           createdAt: new Date(order.created_at),

@@ -39,6 +39,19 @@ function App() {
   const handleOnCheckout = async () => {
   }
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+          const {data} = await axios.get("http://localhost:3000/products");
+          setProducts(data);
+          console.log(data)
+    } catch (err) {
+      console.log("Error fetching products: ", err);
+      }
+    }
+    fetchProducts()
+  }, []);
+
 
   return (
     <div className="App">
