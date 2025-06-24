@@ -25,12 +25,12 @@ export const removeFromCart = (cart, item) => {
  */
 export const addToCart = (cart, item) => {
   if (cart.hasOwnProperty(item.id)) {
+    console.log(cart);
     return {
       ...cart,
       [item.id]: cart[item.id] + 1,
     }
   }
-
   return {
     ...cart,
     [item.id]: 1,

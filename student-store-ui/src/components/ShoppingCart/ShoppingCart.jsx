@@ -4,7 +4,6 @@ import { calculateTaxesAndFees, calculateTotal } from "../../utils/calculations"
 import { formatPrice } from "../../utils/format";
 import "./ShoppingCart.css";
 
-
 const CartTable = ({ products, cart }) => {
   const productMapping = products.reduce((acc, item) => {
     acc[item.id] = item; 

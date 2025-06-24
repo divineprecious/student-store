@@ -18,7 +18,6 @@ function App() {
   const [userInfo, setUserInfo] = useState({ name: "", dorm_number: ""});
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
-  const [isFetching, setIsFetching] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [error, setError] = useState(null);
   const [order, setOrder] = useState(null);
@@ -37,6 +36,33 @@ function App() {
   };
 
   const handleOnCheckout = async () => {
+    try {
+      //Create order
+      const {data} = await axios.post("http://localhost:3000/orders", {
+        customerId: Number(userInfo.dorm_number),
+        totalPrice: 0,
+        status: "completed"
+      });
+
+      //Add order items
+      const orderId = data.id;
+      for (const item of Object.entries(cart)) {
+        const product = products.find((p) => p.id === Number(item[0]));
+        const quantity = item[1];
+        if (!product) continue;
+        await axios.post(`http://localhost:3000/orders/${orderId}/items`, {
+          productId: product.id,
+          quantity: quantity,
+          price: product.price,
+        })
+      }
+      const completedOrder = await axios.get(`http://localhost:3000/orders/${orderId}`);
+      setOrder(completedOrder.data);
+      setCart({});
+      setIsCheckingOut(true);
+    } catch (err) {
+      console.error("Checkout failed:", err);
+    }
   }
 
   useEffect(() => {
@@ -44,7 +70,6 @@ function App() {
       try {
           const {data} = await axios.get("http://localhost:3000/products");
           setProducts(data);
-          console.log(data)
     } catch (err) {
       console.log("Error fetching products: ", err);
       }
@@ -87,7 +112,6 @@ function App() {
                 <Home
                   error={error}
                   products={products}
-                  isFetching={isFetching}
                   activeCategory={activeCategory}
                   setActiveCategory={setActiveCategory}
                   addToCart={handleOnAddToCart}
