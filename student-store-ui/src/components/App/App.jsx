@@ -36,6 +36,20 @@ function App() {
     setSearchInputValue(event.target.value);
   };
 
+  const generateReceiptLines = (order) => {
+    if (!order || !order.orderItems) return [];
+    const lines = ["Thank you for your purchase!"]
+
+    order.orderItems.forEach(item => {
+      const product = products.find(p => p.id === item.productId);
+      lines.push(`${product.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`);
+    })
+    const total = parseFloat(order.totalPrice);
+    lines.push(`Total: $${total.toFixed(2)}`);
+
+    return lines;
+  }
+
   const handleOnCheckout = async () => {
     try {
       //Construct order items
@@ -61,7 +75,17 @@ function App() {
         orderItems: finalOrder
       });
 
-      setOrder(data);
+      //Modify order object for receipt
+      const newOrder = {
+        ...data,
+        purchase: {
+          receipt: {
+            lines: generateReceiptLines(data)
+          }
+        }
+      };
+      setOrder(newOrder);
+      setUserInfo({ name: "", dorm_number: "" });
       setCart({});
       setIsCheckingOut(true);
     } catch (err) {
