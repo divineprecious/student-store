@@ -2,7 +2,8 @@ import "./CheckoutSuccess.css"
 
 const CheckoutSuccess = ({ order, setOrder }) => {
   const handleOnClose = () => {
-    setOrder(null)
+    setOrder(null);
+    setIsCheckingOut(false);
   }
 
   const renderReceipt = () => (

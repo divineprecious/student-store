@@ -56,7 +56,7 @@ function App() {
       let finalOrder = [];
       let total = 0;
       for (const [productId, quantity] of Object.entries(cart)) {
-        let product = products.find((p) => p.id === Number(productId));
+        let product = products.find((p) => p.id == Number(productId));
         finalOrder.push({
           productId: Number(productId),
           quantity: quantity, 
