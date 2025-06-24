@@ -44,11 +44,21 @@ exports.getOrderTotal = async(req, res) => {
 
 //Post order
 exports.createOrder = async (req, res) => {
-    const {customerId, totalPrice, status} = req.body;
+    const {customerId, totalPrice, status, orderItems} = req.body;
     try {
         const newOrder = await prisma.order.create({
-            data: {customerId, totalPrice, status},
-        });
+            data: {customerId, totalPrice, status, orderItems: {
+                create: orderItems.map(item => ({
+                    productId: item.productId,
+                    quantity: item.quantity,
+                    price: item.price
+                })),
+            }},
+            include: {
+                orderItems: true,
+            },
+        },
+    );
         res.status(201).json(newOrder);
     } catch (err) {
         res.status(400).json({error: "Failed to create order"});

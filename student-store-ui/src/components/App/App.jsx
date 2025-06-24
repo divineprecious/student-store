@@ -4,6 +4,7 @@ import axios from "axios";
 import SubNavbar from "../SubNavbar/SubNavbar";
 import Sidebar from "../Sidebar/Sidebar";
 import Home from "../Home/Home";
+import { calculateTotal, calculateTaxesAndFees } from "../../utils/calculations";
 import ProductDetail from "../ProductDetail/ProductDetail";
 import NotFound from "../NotFound/NotFound";
 import { removeFromCart, addToCart, getQuantityOfItemInCart, getTotalItemsInCart } from "../../utils/cart";
@@ -37,27 +38,30 @@ function App() {
 
   const handleOnCheckout = async () => {
     try {
+      //Construct order items
+      let finalOrder = [];
+      let total = 0;
+      for (const [productId, quantity] of Object.entries(cart)) {
+        let product = products.find((p) => p.id === Number(productId));
+        finalOrder.push({
+          productId: Number(productId),
+          quantity: quantity, 
+          price: product.price,
+        })
+        total += (product.price * quantity);
+      }
+
+      total = calculateTotal(total);
+
       //Create order
       const {data} = await axios.post("http://localhost:3000/orders", {
         customerId: Number(userInfo.dorm_number),
-        totalPrice: 0,
-        status: "completed"
+        totalPrice: total,
+        status: "completed",
+        orderItems: finalOrder
       });
 
-      //Add order items
-      const orderId = data.id;
-      for (const item of Object.entries(cart)) {
-        const product = products.find((p) => p.id === Number(item[0]));
-        const quantity = item[1];
-        if (!product) continue;
-        await axios.post(`http://localhost:3000/orders/${orderId}/items`, {
-          productId: product.id,
-          quantity: quantity,
-          price: product.price,
-        })
-      }
-      const completedOrder = await axios.get(`http://localhost:3000/orders/${orderId}`);
-      setOrder(completedOrder.data);
+      setOrder(data);
       setCart({});
       setIsCheckingOut(true);
     } catch (err) {
