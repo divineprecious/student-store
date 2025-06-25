@@ -1,9 +1,9 @@
 import "./CheckoutSuccess.css"
 
-const CheckoutSuccess = ({ order, setOrder }) => {
+const CheckoutSuccess = ({ order, setOrder, toggleSidebar}) => {
   const handleOnClose = () => {
     setOrder(null);
-    setIsCheckingOut(false);
+    toggleSidebar();
   }
 
   const renderReceipt = () => (

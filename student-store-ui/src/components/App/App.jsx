@@ -87,7 +87,6 @@ function App() {
       setOrder(newOrder);
       setUserInfo({ name: "", dorm_number: "" });
       setCart({});
-      setIsCheckingOut(true);
     } catch (err) {
       console.error("Checkout failed:", err);
     }
