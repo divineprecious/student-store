@@ -33,6 +33,14 @@ function Sidebar({ cart, isOpen, products, userInfo, setUserInfo, toggleSidebar,
           order={order}
           setOrder={setOrder}
         />
+
+        {isOpen && (
+          <span className="past-orders">
+            <Link to="/orders">
+              View Past Orders
+            </Link>
+          </span>
+        )}
         
       </div>
     </section>

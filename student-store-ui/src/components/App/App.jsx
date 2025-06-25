@@ -4,11 +4,13 @@ import axios from "axios";
 import SubNavbar from "../SubNavbar/SubNavbar";
 import Sidebar from "../Sidebar/Sidebar";
 import Home from "../Home/Home";
+import OrderDisplay from "../OrderDisplay/OrderDisplay";
 import { calculateTotal, calculateTaxesAndFees } from "../../utils/calculations";
 import ProductDetail from "../ProductDetail/ProductDetail";
 import NotFound from "../NotFound/NotFound";
 import { removeFromCart, addToCart, getQuantityOfItemInCart, getTotalItemsInCart } from "../../utils/cart";
 import "./App.css";
+
 
 function App() {
 
@@ -22,6 +24,7 @@ function App() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [error, setError] = useState(null);
   const [order, setOrder] = useState(null);
+  const [orders, setOrders] = useState([]);
 
   // Toggles sidebar
   const toggleSidebar = () => setSidebarOpen((isOpen) => !isOpen);
@@ -50,6 +53,15 @@ function App() {
     return lines;
   }
 
+    const fetchOrders = async () => {
+      try {
+        const {data} = await axios.get("http://localhost:3000/orders");
+        setOrders(data);
+      } catch (err) {
+        console.log("Error fetching orders: ", err);
+      }
+    }
+
   const handleOnCheckout = async () => {
     try {
       //Construct order items
@@ -71,7 +83,7 @@ function App() {
       const {data} = await axios.post("http://localhost:3000/orders", {
         customerId: Number(userInfo.dorm_number),
         totalPrice: total,
-        status: "completed",
+        status: "Completed",
         orderItems: finalOrder
       });
 
@@ -84,6 +96,7 @@ function App() {
           }
         }
       };
+      await fetchOrders();
       setOrder(newOrder);
       setUserInfo({ name: "", dorm_number: "" });
       setCart({});
@@ -101,8 +114,12 @@ function App() {
       console.log("Error fetching products: ", err);
       }
     }
-    fetchProducts()
+    fetchProducts();
   }, []);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [])
 
 
   return (
@@ -126,16 +143,18 @@ function App() {
           setOrder={setOrder}
         />
         <main>
-          <SubNavbar
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-            searchInputValue={searchInputValue}
-            handleOnSearchInputChange={handleOnSearchInputChange}
-          />
+            
           <Routes>
             <Route
               path="/"
               element={
+              <>
+                <SubNavbar
+                  activeCategory={activeCategory}
+                  setActiveCategory={setActiveCategory}
+                  searchInputValue={searchInputValue}
+                  handleOnSearchInputChange={handleOnSearchInputChange}
+                />
                 <Home
                   error={error}
                   products={products}
@@ -146,6 +165,7 @@ function App() {
                   removeFromCart={handleOnRemoveFromCart}
                   getQuantityOfItemInCart={handleGetItemQuantity}
                 />
+              </>
               }
             />
             <Route
@@ -162,6 +182,14 @@ function App() {
               }
             />
             <Route
+              path="/orders"
+              element={
+                <OrderDisplay
+                  orders={orders}
+                />
+              }
+            />
+            <Route
               path="*"
               element={
                 <NotFound
@@ -172,6 +200,7 @@ function App() {
                 />
               }
             />
+            
           </Routes>
         </main>
       </BrowserRouter>

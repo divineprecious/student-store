@@ -3,7 +3,11 @@ const prisma = require('../src/db/db')
 //Get all orders
 exports.getAllOrders = async (req, res) => {
     try {
-        const orders = await prisma.order.findMany();
+        const orders = await prisma.order.findMany({
+            include: {
+                orderItems: true,
+            },
+        });
         res.status(200).json(orders);
     } catch (error) {
         res.status(404).json({error: 'Failed to get orders'});

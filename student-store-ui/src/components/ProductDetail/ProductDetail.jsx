@@ -14,7 +14,6 @@ function ProductDetail({ addToCart, removeFromCart, products, getQuantityOfItemI
   const quantity = product ? getQuantityOfItemInCart(product) : 0;
 
   useEffect(() => {
-    console.log("useEffect running for productId:", productId);
     const fetchProduct = async () => {
       try {
           const resProduct = products.find((p) => p.id === Number(productId));

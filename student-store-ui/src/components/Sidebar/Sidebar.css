@@ -44,3 +44,14 @@
   cursor: pointer;
   color: white;
 }
+
+.past-orders 
+{
+  border: 1px solid white;
+  padding: 1rem;
+}
+
+.past-orders Link
+{
+  color: white;
+}
