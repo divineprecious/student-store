@@ -66,7 +66,7 @@
 }
 
 .ProductDetail .actions button {
-  background-color: var(--bright-green);
+  background-color: #d8b4dd;;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -75,8 +75,6 @@
   transition: background-color 0.3s;
   width: 140px;
 }
-
-
 
 .ProductDetail .quantity {
   font-size: 14px;

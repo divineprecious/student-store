@@ -2,7 +2,7 @@
   padding: 16px;
 }
 .PaymentInfo > h3 {
-  color: white;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +11,7 @@
   margin-left: 10px;
 }
 .PaymentInfo .label {
-  color: white;
+  color: black;
 }
 .PaymentInfo .is-danger {
   color: var(--bright-red);
@@ -21,7 +21,7 @@
   margin: 5px 0;
 }
 .PaymentInfo .input-field .label {
-  color: white;
+  color: black;
 }
 .PaymentInfo .input-field .control {
   width: 100%;
@@ -43,5 +43,5 @@
   cursor: pointer;
   background: transparent;
   border: solid 1px white;
-  color: white;
+  color: black;
 }

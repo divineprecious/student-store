@@ -87,7 +87,7 @@ function App() {
         orderItems: finalOrder
       });
 
-      //Modify order object for receipt
+      //Modify order object for receipt generation
       const newOrder = {
         ...data,
         purchase: {

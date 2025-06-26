@@ -40,7 +40,7 @@
 .SubNavbar .content .search-bar i {
   height: 40px;
   width: 40px;
-  background: var(--bright-green);
+  background: #d8b4dd;
   color: white;
   fill: white;
   display: flex;
@@ -114,7 +114,7 @@
   transform: scale(0.01);
 }
 .SubNavbar .category-menu li.is-active button {
-  border-bottom: solid 2px var(--bright-green);
+  color: #d8b4dd
 }
 .SubNavbar .category-menu li button {
   cursor: pointer;
@@ -128,6 +128,11 @@
   border-bottom: solid 2px transparent;
   transition: all 0.2s ease;
 }
+
+.SubNavbar .category-menu li button{
+  font-family: 'Lexend';
+}
+
 .SubNavbar .category-menu li button:active {
   transform: translateY(1px);
 }

@@ -1,12 +1,12 @@
 .ShoppingCart {
   width: 100%;
-  color: white;
+  color: black
 }
 .ShoppingCart .open {
   max-width: 550px;
 }
 .ShoppingCart .open > h3 {
-  color: white;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,7 +15,7 @@
   margin-left: 10px;
 }
 .ShoppingCart .notification {
-  color: white;
+  color: black;
   text-align: center;
   margin: 10px;
 }

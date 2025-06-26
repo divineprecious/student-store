@@ -12,11 +12,11 @@
   padding: 0;
   overflow-y: scroll;
   padding-bottom: 2rem;
-  background: var(--dark-blue);
+  background: #d8b4dd;
   border-right: solid 1px white;
 }
 .Sidebar.closed {
-  width: 60px;
+  width: 80px;
 }
 .Sidebar.open {
   width: 575px;
@@ -26,6 +26,9 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+}
+.Sidebar .logo {
+  padding-top: 1rem;
 }
 .Sidebar .toggle-button {
   margin-top: 20px;
@@ -51,7 +54,7 @@
   padding: 1rem;
 }
 
-.past-orders Link
+.past-orders a
 {
-  color: white;
+  color: black;
 }
