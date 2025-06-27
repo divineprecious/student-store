@@ -72,11 +72,11 @@ exports.createOrder = async (req, res) => {
 //Put order
 exports.updateOrder = async (req, res) => {
     const id = Number(req.params.id);
-    const {customer_id, total_price, status} = req.body;
+    const {customerId, totalPrice, status} = req.body;
     try {
         const updatedOrder = await prisma.order.update({
             where: {id},
-            data: {customer_id, total_price, status}
+            data: {customerId, totalPrice, status}
         });
         res.status(200).json(updatedOrder);
     } catch (err) {

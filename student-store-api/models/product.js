@@ -39,7 +39,7 @@ exports.createProduct = async (req, res) => {
     try {
         const newProduct = await prisma.product.create({
             data: {name, description, price, imageUrl, category},
-        });i
+        });
         res.status(201).json(newProduct);
     } catch (err) {
         res.status(400).json({error: 'Failed to create product'});
